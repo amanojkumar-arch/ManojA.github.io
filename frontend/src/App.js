@@ -6,10 +6,10 @@ const HERO_IMG =
   "https://customer-assets.emergentagent.com/job_home-builder-55/artifacts/5s1va9u3_20260425_115304-IMG_STYLE.jpg";
 
 const NAV_LINKS = [
-  { label: "Services", id: "services" },
+  { label: "Profile", id: "about" },
+  { label: "Scope of Work", id: "services" },
   { label: "Expertise", id: "expertise" },
   { label: "Work Experience", id: "experience" },
-  { label: "About", id: "about" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -131,18 +131,18 @@ const Hero = () => {
             data-testid="hero-headline"
             className="rise delay-1 font-display text-white font-extrabold leading-[1.05] text-[38px] sm:text-[48px] lg:text-[60px] tracking-[-0.02em]"
           >
-            Helping organizations manage{" "}
-            <span className="text-[#5fc0ea]">risk</span>, strengthen{" "}
-            <span className="text-[#5fc0ea]">controls</span>, and meet{" "}
-            <span className="text-[#5fc0ea]">regulatory</span> expectations.
+            Risk Management Professional with experience across{" "}
+            <span className="text-[#5fc0ea]">IT audit</span>,{" "}
+            <span className="text-[#5fc0ea]">technology risk</span>, and{" "}
+            <span className="text-[#5fc0ea]">control environments</span>.
           </h1>
           <p
             data-testid="hero-sub"
             className="rise delay-2 mt-6 max-w-xl font-body text-white/75 text-base md:text-lg leading-relaxed"
           >
-            Over a decade of advising enterprises on internal audit, IT
-            controls, cyber governance, and compliance frameworks — turning
-            complex regulation into clear, measurable action.
+            Focused on executing audits, assessing control effectiveness, and
+            supporting risk-informed decisions across financial services,
+            consulting, and manufacturing environments.
           </p>
 
           <div className="rise delay-3 mt-10 flex flex-wrap items-center gap-4">
@@ -158,7 +158,7 @@ const Hero = () => {
               onClick={() => scrollTo("contact")}
               className="font-display font-semibold text-white/80 hover:text-white text-[14px] tracking-[0.1em] px-4 py-4 border-b border-white/30 hover:border-white transition"
             >
-              SCHEDULE A CONSULTATION →
+              GET IN TOUCH →
             </button>
           </div>
         </div>
@@ -180,7 +180,7 @@ const Hero = () => {
   );
 };
 
-/* ---------------- Who We Are / About ---------------- */
+/* ---------------- Profile (formerly Who I Am) ---------------- */
 const About = () => (
   <section
     id="about"
@@ -189,29 +189,68 @@ const About = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-12">
       <div className="lg:col-span-4">
-        <p className="kicker">Who I Am</p>
+        <p className="kicker">Profile</p>
         <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
       </div>
       <div className="lg:col-span-8">
-        <h2 className="font-display text-[28px] md:text-[38px] lg:text-[44px] font-extrabold text-[var(--ink)] leading-[1.15] tracking-[-0.02em]">
-          A governance practitioner for companies that refuse to guess about
-          risk.
-        </h2>
-        <div className="mt-8 space-y-5 font-body text-[var(--muted-ink)] text-[17px] leading-[1.75] max-w-3xl">
+        <div className="space-y-5 font-body text-[var(--muted-ink)] text-[17px] leading-[1.75] max-w-3xl">
           <p>
-            I&apos;m <strong className="text-[var(--ink)]">Manoj Kumar</strong>,
-            an IT Risk Management, Internal Audit and Cyber Governance
-            professional. I partner with finance, technology and compliance
-            leaders to design control environments that stand up to regulators,
-            auditors and the board — without slowing the business down.
+            I&apos;m{" "}
+            <strong className="text-[var(--ink)]">Manoj Kumar</strong>, a Risk
+            Management and IT Audit professional with experience across
+            consulting, pharma manufacturing, and financial services
+            environments. My work focuses on executing IT audits, assessing
+            control effectiveness, and supporting risk-informed decision
+            making.
           </p>
           <p>
-            My work spans SOX IT general controls, ISO 27001, SOC 1 &amp; SOC
-            2, NIST CSF, RBI/SEBI regulatory reviews, third-party risk and
-            enterprise-wide cyber risk assessments. The goal is the same every
-            time: translate complex requirements into clear, testable,
-            defensible controls.
+            I have worked across ITGC, ITAC, SOX, and regulatory audits—
+            partnering with business, technology, and risk teams to identify
+            control gaps and improve control clarity. My approach is practical
+            and evidence-driven, focused on strengthening governance without
+            adding unnecessary complexity.
           </p>
+          <p>
+            Alongside my core work, I run{" "}
+            <strong className="text-[var(--ink)]">Zyaan Edge</strong>, an
+            initiative focused on mentoring and guiding early-career
+            professionals in IT audit, risk, and cybersecurity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ---------------- Zyaan Edge ---------------- */
+const ZyaanEdge = () => (
+  <section
+    id="zyaan-edge"
+    data-testid="zyaan-edge-section"
+    className="bg-white pb-24 md:pb-32"
+  >
+    <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      <div className="border-t border-[#e5e9f0] pt-16 md:pt-20 grid lg:grid-cols-12 gap-12 items-start">
+        <div className="lg:col-span-4">
+          <p className="kicker">Initiative</p>
+          <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
+        </div>
+        <div className="lg:col-span-8">
+          <h2 className="font-display text-[28px] md:text-[38px] lg:text-[44px] font-extrabold text-[var(--ink)] leading-[1.15] tracking-[-0.02em]">
+            Zyaan Edge
+          </h2>
+          <p className="mt-6 font-body text-[var(--muted-ink)] text-[17px] leading-[1.75] max-w-2xl">
+            An initiative focused on mentoring and guiding early-career
+            professionals in IT audit, risk, and cybersecurity.
+          </p>
+          <a
+            data-testid="zyaan-edge-learn-more"
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className="mt-8 inline-block cta-pill font-display font-bold text-[13px] tracking-[0.16em] px-8 py-4"
+          >
+            LEARN MORE →
+          </a>
         </div>
       </div>
     </div>
@@ -221,28 +260,28 @@ const About = () => (
 /* ---------------- Services ---------------- */
 const SERVICES = [
   {
-    title: "IT Risk Management",
-    body: "End-to-end IT risk frameworks, heat-maps, key risk indicators and board-level reporting that tie technology risk to business outcomes.",
+    title: "IT Risk & Control Assessment",
+    body: "Support risk assessments and evaluate control design and effectiveness.",
   },
   {
-    title: "IT & Internal Audit",
-    body: "Risk-based audit planning, execution and reporting across ITGCs, application controls, SOX, SOC 1/SOC 2 readiness and remediation.",
+    title: "IT Audit Execution",
+    body: "Perform audit planning, walkthroughs, control testing, and documentation.",
   },
   {
-    title: "Cyber Governance",
-    body: "CISO-office advisory — policies, standards, risk register, security KPIs, and governance structures aligned to NIST CSF and ISO 27001.",
+    title: "Cyber & Technology Risk",
+    body: "Assess risks across identity, access, and cloud environments.",
   },
   {
-    title: "Regulatory Compliance",
-    body: "Mapping and testing against SOX, GDPR, DPDP, RBI, SEBI, HIPAA and other regulatory regimes with evidence-ready workpapers.",
+    title: "Regulatory & Compliance",
+    body: "Support regulatory audits through structured testing and documentation.",
   },
   {
-    title: "Third-Party & Vendor Risk",
-    body: "Vendor inherent/residual risk tiering, due diligence questionnaires, continuous monitoring and contractual control obligations.",
+    title: "Third-Party Risk Review",
+    body: "Evaluate vendor risk exposure and control environments.",
   },
   {
-    title: "Control Design & Remediation",
-    body: "Re-engineering broken controls, closing audit findings, and building sustainable control ownership across first and second lines.",
+    title: "Control Testing & Remediation",
+    body: "Identify control gaps and support remediation tracking.",
   },
 ];
 
@@ -254,14 +293,13 @@ const Services = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
       <div className="max-w-2xl">
-        <p className="kicker">What I Do</p>
+        <p className="kicker">Scope of Work</p>
         <h2 className="mt-5 font-display text-[34px] md:text-[48px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
-          Services built around your control environment.
+          Scope of Work
         </h2>
         <p className="mt-5 font-body text-[17px] text-[var(--muted-ink)] leading-relaxed">
-          Each engagement is scoped around the controls that matter most to
-          your regulators, auditors and customers — no templated reports, no
-          compliance theatre.
+          Work focused on audit execution, control assessment, and risk
+          evaluation across technology environments.
         </p>
       </div>
 
@@ -296,20 +334,59 @@ const Services = () => (
 
 /* ---------------- Expertise ---------------- */
 const EXPERTISE = [
-  { k: "Frameworks", v: ["NIST CSF", "ISO 27001", "COBIT", "COSO"] },
-  { k: "Audit & Assurance", v: ["SOX ITGC", "SOC 1 / SOC 2", "Internal Audit", "IFC"] },
-  { k: "Regulatory", v: ["RBI IT Framework", "SEBI CSCRF", "GDPR", "DPDP Act"] },
+  {
+    k: "Frameworks",
+    v: [
+      "NIST CSF (working knowledge)",
+      "ISO 27001 (working knowledge)",
+      "COBIT (working knowledge)",
+      "COSO (working knowledge)",
+    ],
+  },
+  {
+    k: "Audit & Assurance",
+    v: [
+      "ITGC / ITAC Testing",
+      "SOX / ICFR (PwC experience)",
+      "Internal Audit",
+      "Risk Assessment",
+      "Regulatory Audits",
+    ],
+  },
+  {
+    k: "Regulatory",
+    v: [
+      "RBI IT Framework (exposure)",
+      "SEBI Cyber Framework (exposure)",
+      "GDPR (basic understanding)",
+      "DPDP Act (basic understanding)",
+    ],
+  },
   {
     k: "Cyber Domains",
-    v: ["Identity & Access", "Cloud Security", "Data Protection", "Third-Party Risk"],
+    v: [
+      "Identity & Access",
+      "Cloud Controls",
+      "Data Protection",
+      "Third-Party Risk",
+    ],
   },
   {
     k: "Tooling",
-    v: ["ServiceNow GRC", "Archer", "Auditboard", "Excel-native workpapers"],
+    v: [
+      "ACL",
+      "Alteryx",
+      "Excel-based Workpapers",
+      "ServiceNow GRC (exposure)",
+    ],
   },
   {
     k: "Industries",
-    v: ["Banking & NBFC", "Insurance", "IT/ITeS", "Fintech"],
+    v: [
+      "Financial Services (3+ years)",
+      "Consulting (2+ years)",
+      "Pharma Manufacturing (2+ years)",
+    ],
   },
 ];
 
@@ -323,22 +400,21 @@ const Expertise = () => (
       <div className="lg:col-span-5">
         <p className="kicker">Areas of Expertise</p>
         <h2 className="mt-5 font-display text-[34px] md:text-[46px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
-          Deep specialisation across the full governance, risk &amp;
-          compliance stack.
+          Core areas of work across audit, risk, and governance.
         </h2>
         <p className="mt-5 font-body text-[17px] text-[var(--muted-ink)] leading-relaxed max-w-md">
-          A practitioner&apos;s view of what works — built from years of
-          hands-on audit, assessment and advisory engagements.
+          Built through hands-on experience in audit execution, control
+          testing, and risk assessments across multiple industries.
         </p>
         <div
           className="mt-10 inline-flex items-center gap-4 px-6 py-4 bg-[var(--ink)] text-white"
           data-testid="expertise-stat"
         >
           <span className="font-display text-[var(--brand-blue)] text-4xl font-extrabold">
-            12+
+            7+
           </span>
           <span className="font-display text-sm tracking-[0.2em] uppercase text-white/80 max-w-[140px] leading-snug">
-            Years in Risk &amp; Assurance
+            Years in Audit &amp; Risk
           </span>
         </div>
       </div>
@@ -382,34 +458,34 @@ const EXPERIENCE = [
     location: "Hyderabad",
     logo: "/logos/wellsfargo.svg",
     body:
-      "Executed enterprise technology risk audits across infrastructure, applications, and cyber domains. Assessed ITGC/ITAC controls, supported SOX/regulatory assurance, and contributed to risk-based audit planning. Partnered with stakeholders to strengthen governance and control maturity.",
+      "Executed IT audits across infrastructure, applications, and cyber domains, covering ITGC and ITAC controls. Contributed to risk-based audit planning and performed control testing to support regulatory assurance.\n\nIdentified control gaps and supported remediation discussions with technology and risk teams. Participated in risk assessments and ongoing monitoring to highlight emerging risks.",
   },
   {
     period: "Feb 2021 — Mar 2023",
     role: "Experienced Associate (incl. Netherlands Secondment)",
     org: "PwC",
-    location: "",
+    location: "Hyderabad",
     logo: "/logos/pwc.svg",
     body:
-      "Executed SOX/ICFR IT audits, assessed ITGC and application controls, and supported remediation. Used analytics (ACL, Alteryx) to improve audit efficiency and identify control gaps. Contributed to internal quality control testing during secondment in the Netherlands.",
+      "Executed SOX and ICFR IT audits, including walkthroughs, control testing, and documentation.\n\nIdentified control deficiencies and supported remediation. Used ACL and Alteryx for data analysis and improving audit efficiency. Contributed to internal quality control testing during secondment.",
   },
   {
     period: "Feb 2019 — Jan 2021",
     role: "Internal Auditor (Consultant)",
     org: "Granules India Limited",
-    location: "",
+    location: "Hyderabad",
     logo: "/logos/granules.png",
     body:
-      "Performed ICFR testing, process audits, and control evaluations. Supported internal audit leadership and mentored junior team members.",
+      "Supported execution of internal audits in a pharma manufacturing environment, including process reviews and ICFR testing.\n\nEvaluated control effectiveness, documented findings, and tracked remediation actions with management.",
   },
   {
     period: "Aug 2017 — Jun 2018",
     role: "Associate Consultant",
     org: "Infosys",
-    location: "",
+    location: "Bengaluru",
     logo: "/logos/infosys.svg",
     body:
-      "Worked in management reporting and business process environments, supporting operational and financial reporting workflows.",
+      "Supported management reporting and financial analysis, including revenue tracking and variance analysis.\n\nImproved reporting accuracy and supported operational and financial decision-making.",
   },
 ];
 
@@ -447,7 +523,7 @@ const Experience = () => (
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 relative">
       <p className="kicker text-[#5fc0ea]">Work Experience</p>
       <h2 className="mt-5 font-display text-[34px] md:text-[48px] font-extrabold text-white leading-[1.1] tracking-[-0.02em] max-w-3xl">
-        A career built on evidence, rigour and business judgement.
+        Roles, responsibilities, and where the work happened.
       </h2>
 
       <div className="mt-16 relative">
@@ -469,7 +545,7 @@ const Experience = () => (
                     {e.logo && (
                       <span
                         data-testid={`experience-${i}-logo`}
-                        className="inline-flex items-center justify-center w-11 h-11 rounded-md bg-white p-1.5 flex-shrink-0"
+                        className="inline-flex items-center justify-center w-14 h-14 rounded-md bg-white p-2 flex-shrink-0"
                       >
                         <img
                           src={e.logo}
@@ -479,24 +555,33 @@ const Experience = () => (
                         />
                       </span>
                     )}
-                    <p className="font-display text-white text-lg font-semibold leading-tight">
-                      {e.org}
-                    </p>
+                    <div>
+                      <p className="font-display text-white text-lg font-semibold leading-tight">
+                        {e.org}
+                      </p>
+                      {e.location && (
+                        <p className="mt-1 font-body text-white/55 text-sm">
+                          {e.location}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  {e.location && (
-                    <p className="mt-2 font-body text-white/55 text-sm">
-                      {e.location}
-                    </p>
-                  )}
                 </div>
               </div>
               <div className="md:col-span-8">
                 <h3 className="font-display text-white text-[24px] md:text-[28px] font-extrabold tracking-[-0.01em] leading-tight">
                   {e.role}
                 </h3>
-                <p className="mt-4 font-body text-white/70 text-[16px] leading-[1.75] max-w-2xl">
-                  {e.body}
-                </p>
+                <div className="mt-4 space-y-4 max-w-2xl">
+                  {e.body.split("\n\n").map((para, idx) => (
+                    <p
+                      key={idx}
+                      className="font-body text-white/70 text-[16px] leading-[1.75]"
+                    >
+                      {para}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -541,8 +626,9 @@ const Contact = () => (
           </a>
           <a
             data-testid="contact-linkedin-btn"
-            href="#"
-            onClick={(e) => e.preventDefault()}
+            href="https://www.linkedin.com/in/manoj-kumar-a-3a9663177"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-display font-bold text-[13px] tracking-[0.16em] px-8 py-4 border border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--ink)] hover:text-white transition-colors"
           >
             LINKEDIN
@@ -623,6 +709,7 @@ const Home = () => {
     <div data-testid="home-page">
       <Hero />
       <About />
+      <ZyaanEdge />
       <Services />
       <Expertise />
       <Experience />
