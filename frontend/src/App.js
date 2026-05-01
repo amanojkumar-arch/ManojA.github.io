@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   Search,
@@ -14,6 +14,49 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Blogs from "./pages/Blogs";
+
+/* ----- Reveal-on-scroll: applies .reveal-in once each .reveal element enters viewport ----- */
+const useRevealOnScroll = () => {
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+};
+
+/* ----- Scroll spy for active nav highlight ----- */
+const useActiveSection = (ids) => {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    if (!sections.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, [ids]);
+  return active;
+};
 
 const HERO_IMG =
   "https://customer-assets.emergentagent.com/job_home-builder-55/artifacts/5s1va9u3_20260425_115304-IMG_STYLE.jpg";
@@ -33,6 +76,13 @@ const scrollTo = (id) => {
 
 /* ---------------- Header ---------------- */
 const Header = () => {
+  const active = useActiveSection([
+    "about",
+    "services",
+    "expertise",
+    "experience",
+    "contact",
+  ]);
   return (
     <header
       data-testid="site-header"
@@ -60,7 +110,8 @@ const Header = () => {
               key={n.id}
               data-testid={`nav-${n.id}`}
               onClick={() => scrollTo(n.id)}
-              className="nav-link font-display text-white/90 hover:text-white text-[15px] font-medium"
+              data-active={active === n.id}
+              className="nav-link font-display text-white/85 hover:text-white text-[17px] font-semibold"
             >
               {n.label}
             </button>
@@ -205,8 +256,8 @@ const About = () => (
         <p className="kicker">Profile</p>
         <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
       </div>
-      <div className="lg:col-span-8">
-        <div className="space-y-5 font-body text-[var(--muted-ink)] text-[17px] leading-[1.75] max-w-3xl">
+      <div className="lg:col-span-8 reveal">
+        <div className="space-y-5 font-body text-[var(--muted-ink)] text-[19px] leading-[1.75] max-w-3xl">
           <p>
             I&apos;m{" "}
             <strong className="text-[var(--ink)]">Manoj Kumar</strong>, a Risk
@@ -248,11 +299,11 @@ const ZyaanEdge = () => (
           <p className="kicker">Initiative</p>
           <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
         </div>
-        <div className="lg:col-span-8">
-          <h2 className="font-display text-[28px] md:text-[38px] lg:text-[44px] font-extrabold text-[var(--ink)] leading-[1.15] tracking-[-0.02em]">
+        <div className="lg:col-span-8 reveal">
+          <h2 className="font-display text-[32px] md:text-[44px] lg:text-[52px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
             Zyaan Edge
           </h2>
-          <p className="mt-6 font-body text-[var(--muted-ink)] text-[17px] leading-[1.75] max-w-2xl">
+          <p className="mt-6 font-body text-[var(--muted-ink)] text-[19px] leading-[1.75] max-w-2xl">
             An initiative focused on mentoring and guiding early-career
             professionals in IT audit, risk, and cybersecurity.
           </p>
@@ -305,12 +356,11 @@ const Services = () => (
     className="bg-[var(--paper-soft)] py-24 md:py-32 relative overflow-hidden"
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
-      <div className="max-w-2xl">
-        <p className="kicker">Scope of Work</p>
-        <h2 className="mt-5 font-display text-[34px] md:text-[48px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
+      <div className="max-w-2xl reveal">
+        <h2 className="font-display text-[40px] md:text-[58px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Scope of Work
         </h2>
-        <p className="mt-5 font-body text-[17px] text-[var(--muted-ink)] leading-relaxed">
+        <p className="mt-6 font-body text-[19px] md:text-[20px] text-[var(--muted-ink)] leading-[1.7]">
           Work focused on audit execution, control assessment, and risk
           evaluation across technology environments.
         </p>
@@ -321,7 +371,8 @@ const Services = () => (
           <div
             key={s.title}
             data-testid={`service-card-${i}`}
-            className="card-lift bg-white border border-[#e5e9f0] rounded-sm p-8 relative"
+            style={{ "--stagger": i * 80 }}
+            className="reveal card-lift bg-white border border-[#e5e9f0] rounded-sm p-9 relative"
           >
             <div className="flex items-start justify-between">
               <span className="font-display text-[var(--brand-blue)] font-extrabold text-[15px] tracking-[0.2em]">
@@ -332,10 +383,10 @@ const Services = () => (
                 <span />
               </span>
             </div>
-            <h3 className="mt-6 font-display font-extrabold text-[var(--ink)] text-[22px] leading-tight tracking-[-0.01em]">
+            <h3 className="mt-7 font-display font-extrabold text-[var(--ink)] text-[24px] leading-tight tracking-[-0.01em]">
               {s.title}
             </h3>
-            <p className="mt-4 font-body text-[15px] text-[var(--muted-ink)] leading-[1.7]">
+            <p className="mt-4 font-body text-[17px] text-[var(--muted-ink)] leading-[1.7]">
               {s.body}
             </p>
           </div>
@@ -378,16 +429,15 @@ const Expertise = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
       {/* Header row */}
-      <div className="grid lg:grid-cols-12 gap-12 items-end">
+      <div className="grid lg:grid-cols-12 gap-12 items-end reveal">
         <div className="lg:col-span-8">
-          <p className="kicker">Risk Capability Map</p>
           <h2
             data-testid="expertise-headline"
-            className="mt-5 font-display text-[42px] md:text-[58px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]"
+            className="font-display text-[44px] md:text-[64px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]"
           >
             Risk Capability Map
           </h2>
-          <p className="mt-6 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.8] max-w-2xl">
+          <p className="mt-6 font-body text-[19px] md:text-[21px] text-[var(--muted-ink)] leading-[1.7] max-w-2xl">
             A structured view of how I operate across the audit and risk
             lifecycle—focused on execution, control evaluation, and risk
             visibility.
@@ -411,44 +461,44 @@ const Expertise = () => (
       {/* BLOCK 1 — Risk Lifecycle */}
       <div
         data-testid="lifecycle-block"
-        className="mt-20 md:mt-24 bg-[var(--paper-soft)] border border-[#e5e9f0] p-8 md:p-12"
+        className="reveal mt-20 md:mt-24 bg-[var(--paper-soft)] border border-[#e5e9f0] p-8 md:p-14"
       >
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
             Block 01 · Risk Lifecycle
           </p>
-          <p className="font-body text-sm text-[var(--muted-ink)] hidden md:block">
+          <p className="font-body text-[15px] text-[var(--muted-ink)] hidden md:block">
             How a typical engagement moves end-to-end.
           </p>
         </div>
 
-        <div className="mt-10 flex flex-wrap md:flex-nowrap items-start justify-between gap-y-10">
+        <div className="mt-12 flex flex-wrap md:flex-nowrap items-start justify-between gap-y-12">
           {LIFECYCLE.map((step, i) => {
             const { Icon } = step;
             return (
               <React.Fragment key={step.label}>
                 <div
                   data-testid={`lifecycle-${i}`}
-                  className="flex flex-col items-center text-center w-1/2 md:flex-1 md:min-w-0 px-2"
+                  className="lifecycle-step group flex flex-col items-center text-center w-1/2 md:flex-1 md:min-w-0 px-2 cursor-default"
                 >
-                  <span className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border-2 border-[var(--brand-blue)] flex items-center justify-center shadow-[0_8px_24px_-12px_rgba(28,163,224,0.5)]">
+                  <span className="icon-pop w-24 h-24 md:w-28 md:h-28 rounded-full bg-white border-2 border-[var(--brand-blue)] flex items-center justify-center shadow-[0_10px_28px_-12px_rgba(28,163,224,0.55)]">
                     <Icon
                       strokeWidth={1.6}
-                      className="w-10 h-10 md:w-12 md:h-12 text-[var(--brand-blue)]"
+                      className="w-12 h-12 md:w-14 md:h-14 text-[var(--brand-blue)]"
                     />
                   </span>
-                  <p className="mt-5 font-display font-bold text-[15px] md:text-[16px] text-[var(--ink)] leading-snug max-w-[160px]">
+                  <p className="mt-6 font-display font-bold text-[16px] md:text-[18px] text-[var(--ink)] leading-snug max-w-[170px]">
                     {step.label}
                   </p>
                 </div>
                 {i < LIFECYCLE.length - 1 && (
                   <div
                     aria-hidden="true"
-                    className="hidden md:flex items-center justify-center pt-9 flex-shrink-0"
+                    className="hidden md:flex items-center justify-center pt-11 flex-shrink-0"
                   >
                     <ChevronRight
-                      strokeWidth={2}
-                      className="w-7 h-7 text-[var(--brand-blue)]/60"
+                      strokeWidth={2.5}
+                      className="w-9 h-9 text-[var(--brand-blue)]"
                     />
                   </div>
                 )}
@@ -460,12 +510,12 @@ const Expertise = () => (
 
       {/* BLOCK 2 — Audit & Control Capabilities */}
       <div className="mt-20 md:mt-28">
-        <div className="flex items-baseline justify-between flex-wrap gap-4">
+        <div className="flex items-baseline justify-between flex-wrap gap-4 reveal">
           <div>
-            <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+            <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
               Block 02 · Audit &amp; Control Capabilities
             </p>
-            <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+            <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
               Where the day-to-day work sits.
             </h3>
           </div>
@@ -478,16 +528,18 @@ const Expertise = () => (
               <div
                 key={cap.label}
                 data-testid={`audit-cap-${i}`}
-                className="card-lift bg-white border border-[#e5e9f0] p-8 md:p-10 flex items-start gap-6"
+                style={{ "--stagger": i * 80 }}
+                className="reveal card-lift group bg-white border border-[#e5e9f0] p-9 md:p-10 flex items-start gap-6"
               >
-                <span className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-md bg-[var(--brand-blue)]/10 flex items-center justify-center">
+                <span className="icon-pop flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-md bg-[var(--brand-blue)]/10 flex items-center justify-center">
                   <Icon
                     strokeWidth={1.6}
-                    className="w-9 h-9 md:w-11 md:h-11 text-[var(--brand-blue)]"
+                    className="w-11 h-11 md:w-13 md:h-13 text-[var(--brand-blue)]"
+                    style={{ width: "3rem", height: "3rem" }}
                   />
                 </span>
-                <div>
-                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[20px] md:text-[22px] leading-tight tracking-[-0.01em]">
+                <div className="pt-2">
+                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[22px] md:text-[24px] leading-tight tracking-[-0.01em]">
                     {cap.label}
                   </h4>
                 </div>
@@ -499,12 +551,14 @@ const Expertise = () => (
 
       {/* BLOCK 3 — Industries */}
       <div className="mt-20 md:mt-28">
-        <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-          Block 03 · Industries
-        </p>
-        <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
-          Sectors I&apos;ve worked across.
-        </h3>
+        <div className="reveal">
+          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+            Block 03 · Industries
+          </p>
+          <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+            Sectors I&apos;ve worked across.
+          </h3>
+        </div>
 
         <div className="mt-10 grid md:grid-cols-3 gap-6">
           {INDUSTRIES.map((ind, i) => {
@@ -513,18 +567,19 @@ const Expertise = () => (
               <div
                 key={ind.label}
                 data-testid={`industry-${i}`}
-                className="card-lift bg-[var(--paper-soft)] border border-[#e5e9f0] p-10 text-center"
+                style={{ "--stagger": i * 100 }}
+                className="reveal card-lift group bg-[var(--paper-soft)] border border-[#e5e9f0] p-12 text-center"
               >
-                <span className="inline-flex w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border border-[var(--brand-blue)]/30 items-center justify-center">
+                <span className="icon-pop inline-flex w-24 h-24 md:w-28 md:h-28 rounded-full bg-white border border-[var(--brand-blue)]/30 items-center justify-center">
                   <Icon
                     strokeWidth={1.6}
-                    className="w-11 h-11 md:w-12 md:h-12 text-[var(--brand-blue)]"
+                    className="w-12 h-12 md:w-14 md:h-14 text-[var(--brand-blue)]"
                   />
                 </span>
-                <h4 className="mt-6 font-display font-extrabold text-[var(--ink)] text-[20px] md:text-[22px] tracking-[-0.01em]">
+                <h4 className="mt-7 font-display font-extrabold text-[var(--ink)] text-[22px] md:text-[24px] tracking-[-0.01em]">
                   {ind.label}
                 </h4>
-                <p className="mt-2 font-body text-[14px] text-[var(--muted-ink)] tracking-[0.06em]">
+                <p className="mt-2 font-body text-[15px] text-[var(--muted-ink)] tracking-[0.06em]">
                   {ind.note}
                 </p>
               </div>
@@ -535,21 +590,22 @@ const Expertise = () => (
 
       {/* BLOCK 4 — Tools */}
       <div className="mt-20 md:mt-28">
-        <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-          Block 04 · Tools
-        </p>
-        <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
-          Day-to-day tooling.
-        </h3>
+        <div className="reveal">
+          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+            Block 04 · Tools
+          </p>
+          <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+            Day-to-day tooling.
+          </h3>
+        </div>
 
         <div className="mt-10 grid sm:grid-cols-2 gap-6 max-w-3xl">
           <div
             data-testid="tool-acl"
-            className="card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[160px]"
+            className="reveal card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[170px]"
           >
-            {/* ACL — typographic mark (no public PD logo available) */}
             <div className="flex items-baseline gap-3">
-              <span className="font-display font-extrabold text-[56px] md:text-[64px] text-[var(--ink)] leading-none tracking-[-0.04em]">
+              <span className="font-display font-extrabold text-[60px] md:text-[70px] text-[var(--ink)] leading-none tracking-[-0.04em]">
                 ACL
               </span>
               <span className="font-display text-[13px] tracking-[0.24em] uppercase text-[var(--brand-blue)] font-bold">
@@ -559,29 +615,30 @@ const Expertise = () => (
           </div>
           <div
             data-testid="tool-alteryx"
-            className="card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[160px]"
+            style={{ "--stagger": 100 }}
+            className="reveal card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[170px]"
           >
             <img
               src="/logos/alteryx.svg"
               alt="Alteryx"
-              className="h-14 md:h-16 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
           </div>
         </div>
       </div>
 
       {/* FRAMEWORKS — subtle row */}
-      <div className="mt-20 md:mt-24 border-t border-[#e5e9f0] pt-10">
+      <div className="mt-20 md:mt-24 border-t border-[#e5e9f0] pt-10 reveal">
         <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--muted-ink)] uppercase">
           Frameworks
         </p>
         <div
           data-testid="frameworks-row"
-          className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3"
+          className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3"
         >
           {FRAMEWORKS.map((f, i) => (
             <React.Fragment key={f}>
-              <span className="font-display font-bold text-[18px] md:text-[20px] text-[var(--ink)] tracking-[-0.01em]">
+              <span className="font-display font-bold text-[20px] md:text-[22px] text-[var(--ink)] tracking-[-0.01em]">
                 {f}
               </span>
               {i < FRAMEWORKS.length - 1 && (
@@ -671,7 +728,7 @@ const Experience = () => (
 
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 relative">
       <p className="kicker text-[#5fc0ea]">Work Experience</p>
-      <h2 className="mt-5 font-display text-[34px] md:text-[48px] font-extrabold text-white leading-[1.1] tracking-[-0.02em] max-w-3xl">
+      <h2 className="mt-5 font-display text-[40px] md:text-[58px] font-extrabold text-white leading-[1.05] tracking-[-0.02em] max-w-3xl">
         Roles, responsibilities, and where the work happened.
       </h2>
 
@@ -682,7 +739,8 @@ const Experience = () => (
             <div
               key={i}
               data-testid={`experience-${i}`}
-              className="relative grid md:grid-cols-12 gap-6 md:gap-10"
+              style={{ "--stagger": i * 80 }}
+              className="reveal relative grid md:grid-cols-12 gap-6 md:gap-10"
             >
               <div className="md:col-span-4 flex md:items-start gap-5">
                 <span className="timeline-dot mt-2 hidden md:inline-block" />
@@ -718,14 +776,14 @@ const Experience = () => (
                 </div>
               </div>
               <div className="md:col-span-8">
-                <h3 className="font-display text-white text-[24px] md:text-[28px] font-extrabold tracking-[-0.01em] leading-tight">
+                <h3 className="font-display text-white text-[26px] md:text-[30px] font-extrabold tracking-[-0.01em] leading-tight">
                   {e.role}
                 </h3>
                 <div className="mt-4 space-y-4 max-w-2xl">
                   {e.body.split("\n\n").map((para, idx) => (
                     <p
                       key={idx}
-                      className="font-body text-white/70 text-[16px] leading-[1.75]"
+                      className="font-body text-white/75 text-[17px] leading-[1.75]"
                     >
                       {para}
                     </p>
@@ -748,12 +806,12 @@ const Contact = () => (
     className="bg-white py-24 md:py-32"
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10 items-start">
-      <div className="lg:col-span-6">
+      <div className="lg:col-span-6 reveal">
         <p className="kicker">Let's Connect</p>
-        <h2 className="mt-5 font-display text-[36px] md:text-[52px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
+        <h2 className="mt-5 font-display text-[40px] md:text-[60px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Working on something interesting in audit, risk, governance, or cyber these days?
         </h2>
-        <div className="mt-6 space-y-4 font-body text-[17px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
+        <div className="mt-7 space-y-4 font-body text-[19px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
           <p>
             I enjoy connecting with people in IT audit, risk, and cyber
             governance—sharing thoughts on SOX, SOC, and how risk is evolving.
@@ -854,6 +912,7 @@ const Footer = () => (
 
 /* ---------------- Page ---------------- */
 const Home = () => {
+  useRevealOnScroll();
   return (
     <div data-testid="home-page">
       <Hero />
