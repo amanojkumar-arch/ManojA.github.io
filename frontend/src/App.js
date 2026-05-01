@@ -1,5 +1,18 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Search,
+  ClipboardCheck,
+  ShieldCheck,
+  AlertTriangle,
+  Wrench,
+  FileCheck2,
+  ScrollText,
+  Building2,
+  Briefcase,
+  FlaskConical,
+  ChevronRight,
+} from "lucide-react";
 import Blogs from "./pages/Blogs";
 
 const HERO_IMG =
@@ -332,63 +345,30 @@ const Services = () => (
   </section>
 );
 
-/* ---------------- Expertise ---------------- */
-const EXPERTISE = [
-  {
-    k: "Frameworks",
-    v: [
-      "NIST CSF (working knowledge)",
-      "ISO 27001 (working knowledge)",
-      "COBIT (working knowledge)",
-      "COSO (working knowledge)",
-    ],
-  },
-  {
-    k: "Audit & Assurance",
-    v: [
-      "ITGC / ITAC Testing",
-      "SOX / ICFR (PwC experience)",
-      "Internal Audit",
-      "Risk Assessment",
-      "Regulatory Audits",
-    ],
-  },
-  {
-    k: "Regulatory",
-    v: [
-      "RBI IT Framework (exposure)",
-      "SEBI Cyber Framework (exposure)",
-      "GDPR (basic understanding)",
-      "DPDP Act (basic understanding)",
-    ],
-  },
-  {
-    k: "Cyber Domains",
-    v: [
-      "Identity & Access",
-      "Cloud Controls",
-      "Data Protection",
-      "Third-Party Risk",
-    ],
-  },
-  {
-    k: "Tooling",
-    v: [
-      "ACL",
-      "Alteryx",
-      "Excel-based Workpapers",
-      "ServiceNow GRC (exposure)",
-    ],
-  },
-  {
-    k: "Industries",
-    v: [
-      "Financial Services (3+ years)",
-      "Consulting (2+ years)",
-      "Pharma Manufacturing (2+ years)",
-    ],
-  },
+/* ---------------- Risk Capability Map (Expertise) ---------------- */
+const LIFECYCLE = [
+  { label: "Risk Assessment", Icon: Search },
+  { label: "Control Design Evaluation", Icon: FileCheck2 },
+  { label: "Control Testing (ITGC / ITAC)", Icon: ClipboardCheck },
+  { label: "Issue Identification", Icon: AlertTriangle },
+  { label: "Remediation Tracking", Icon: Wrench },
 ];
+
+const AUDIT_CAPS = [
+  { label: "ITGC / ITAC Testing", Icon: ClipboardCheck },
+  { label: "SOX / ICFR", Icon: ShieldCheck },
+  { label: "Internal Audit", Icon: FileCheck2 },
+  { label: "Regulatory Audits", Icon: ScrollText },
+  { label: "Risk Assessment", Icon: Search },
+];
+
+const INDUSTRIES = [
+  { label: "Financial Services", note: "3+ years", Icon: Building2 },
+  { label: "Consulting", note: "2+ years", Icon: Briefcase },
+  { label: "Pharma Manufacturing", note: "2+ years", Icon: FlaskConical },
+];
+
+const FRAMEWORKS = ["NIST CSF", "ISO 27001", "COBIT", "COSO"];
 
 const Expertise = () => (
   <section
@@ -396,52 +376,221 @@ const Expertise = () => (
     data-testid="expertise-section"
     className="bg-white py-24 md:py-32 relative"
   >
-    <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-12">
-      <div className="lg:col-span-5">
-        <p className="kicker">Areas of Expertise</p>
-        <h2 className="mt-5 font-display text-[34px] md:text-[46px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
-          Core areas of work across audit, risk, and governance.
-        </h2>
-        <p className="mt-5 font-body text-[17px] text-[var(--muted-ink)] leading-relaxed max-w-md">
-          Built through hands-on experience in audit execution, control
-          testing, and risk assessments across multiple industries.
-        </p>
-        <div
-          className="mt-10 inline-flex items-center gap-4 px-6 py-4 bg-[var(--ink)] text-white"
-          data-testid="expertise-stat"
-        >
-          <span className="font-display text-[var(--brand-blue)] text-4xl font-extrabold">
-            7+
-          </span>
-          <span className="font-display text-sm tracking-[0.2em] uppercase text-white/80 max-w-[140px] leading-snug">
-            Years in Audit &amp; Risk
-          </span>
+    <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      {/* Header row */}
+      <div className="grid lg:grid-cols-12 gap-12 items-end">
+        <div className="lg:col-span-8">
+          <p className="kicker">Risk Capability Map</p>
+          <h2
+            data-testid="expertise-headline"
+            className="mt-5 font-display text-[42px] md:text-[58px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]"
+          >
+            Risk Capability Map
+          </h2>
+          <p className="mt-6 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.8] max-w-2xl">
+            A structured view of how I operate across the audit and risk
+            lifecycle—focused on execution, control evaluation, and risk
+            visibility.
+          </p>
+        </div>
+        <div className="lg:col-span-4 flex lg:justify-end">
+          <div
+            className="inline-flex items-center gap-5 px-7 py-5 bg-[var(--ink)] text-white"
+            data-testid="expertise-stat"
+          >
+            <span className="font-display text-[var(--brand-blue)] text-5xl font-extrabold leading-none">
+              7+
+            </span>
+            <span className="font-display text-[13px] tracking-[0.2em] uppercase text-white/80 max-w-[150px] leading-snug">
+              Years in Audit &amp; Risk
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className="lg:col-span-7">
-        <div className="grid sm:grid-cols-2 gap-6">
-          {EXPERTISE.map((e, idx) => (
-            <div
-              key={e.k}
-              data-testid={`expertise-card-${idx}`}
-              className="card-lift border border-[#e5e9f0] rounded-sm p-7 bg-[var(--paper-soft)]"
-            >
-              <p className="font-display font-bold text-[13px] tracking-[0.2em] text-[var(--brand-blue)] uppercase">
-                {e.k}
-              </p>
-              <ul className="mt-4 space-y-2">
-                {e.v.map((item) => (
-                  <li
-                    key={item}
-                    className="font-body text-[15px] text-[var(--ink)] flex items-center gap-3"
+      {/* BLOCK 1 — Risk Lifecycle */}
+      <div
+        data-testid="lifecycle-block"
+        className="mt-20 md:mt-24 bg-[var(--paper-soft)] border border-[#e5e9f0] p-8 md:p-12"
+      >
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+            Block 01 · Risk Lifecycle
+          </p>
+          <p className="font-body text-sm text-[var(--muted-ink)] hidden md:block">
+            How a typical engagement moves end-to-end.
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-wrap md:flex-nowrap items-start justify-between gap-y-10">
+          {LIFECYCLE.map((step, i) => {
+            const { Icon } = step;
+            return (
+              <React.Fragment key={step.label}>
+                <div
+                  data-testid={`lifecycle-${i}`}
+                  className="flex flex-col items-center text-center w-1/2 md:flex-1 md:min-w-0 px-2"
+                >
+                  <span className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border-2 border-[var(--brand-blue)] flex items-center justify-center shadow-[0_8px_24px_-12px_rgba(28,163,224,0.5)]">
+                    <Icon
+                      strokeWidth={1.6}
+                      className="w-10 h-10 md:w-12 md:h-12 text-[var(--brand-blue)]"
+                    />
+                  </span>
+                  <p className="mt-5 font-display font-bold text-[15px] md:text-[16px] text-[var(--ink)] leading-snug max-w-[160px]">
+                    {step.label}
+                  </p>
+                </div>
+                {i < LIFECYCLE.length - 1 && (
+                  <div
+                    aria-hidden="true"
+                    className="hidden md:flex items-center justify-center pt-9 flex-shrink-0"
                   >
-                    <span className="w-1.5 h-1.5 bg-[var(--brand-blue)] rounded-full" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+                    <ChevronRight
+                      strokeWidth={2}
+                      className="w-7 h-7 text-[var(--brand-blue)]/60"
+                    />
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* BLOCK 2 — Audit & Control Capabilities */}
+      <div className="mt-20 md:mt-28">
+        <div className="flex items-baseline justify-between flex-wrap gap-4">
+          <div>
+            <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+              Block 02 · Audit &amp; Control Capabilities
+            </p>
+            <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+              Where the day-to-day work sits.
+            </h3>
+          </div>
+        </div>
+
+        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {AUDIT_CAPS.map((cap, i) => {
+            const { Icon } = cap;
+            return (
+              <div
+                key={cap.label}
+                data-testid={`audit-cap-${i}`}
+                className="card-lift bg-white border border-[#e5e9f0] p-8 md:p-10 flex items-start gap-6"
+              >
+                <span className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-md bg-[var(--brand-blue)]/10 flex items-center justify-center">
+                  <Icon
+                    strokeWidth={1.6}
+                    className="w-9 h-9 md:w-11 md:h-11 text-[var(--brand-blue)]"
+                  />
+                </span>
+                <div>
+                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[20px] md:text-[22px] leading-tight tracking-[-0.01em]">
+                    {cap.label}
+                  </h4>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* BLOCK 3 — Industries */}
+      <div className="mt-20 md:mt-28">
+        <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+          Block 03 · Industries
+        </p>
+        <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+          Sectors I&apos;ve worked across.
+        </h3>
+
+        <div className="mt-10 grid md:grid-cols-3 gap-6">
+          {INDUSTRIES.map((ind, i) => {
+            const { Icon } = ind;
+            return (
+              <div
+                key={ind.label}
+                data-testid={`industry-${i}`}
+                className="card-lift bg-[var(--paper-soft)] border border-[#e5e9f0] p-10 text-center"
+              >
+                <span className="inline-flex w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border border-[var(--brand-blue)]/30 items-center justify-center">
+                  <Icon
+                    strokeWidth={1.6}
+                    className="w-11 h-11 md:w-12 md:h-12 text-[var(--brand-blue)]"
+                  />
+                </span>
+                <h4 className="mt-6 font-display font-extrabold text-[var(--ink)] text-[20px] md:text-[22px] tracking-[-0.01em]">
+                  {ind.label}
+                </h4>
+                <p className="mt-2 font-body text-[14px] text-[var(--muted-ink)] tracking-[0.06em]">
+                  {ind.note}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* BLOCK 4 — Tools */}
+      <div className="mt-20 md:mt-28">
+        <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
+          Block 04 · Tools
+        </p>
+        <h3 className="mt-4 font-display text-[26px] md:text-[34px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+          Day-to-day tooling.
+        </h3>
+
+        <div className="mt-10 grid sm:grid-cols-2 gap-6 max-w-3xl">
+          <div
+            data-testid="tool-acl"
+            className="card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[160px]"
+          >
+            {/* ACL — typographic mark (no public PD logo available) */}
+            <div className="flex items-baseline gap-3">
+              <span className="font-display font-extrabold text-[56px] md:text-[64px] text-[var(--ink)] leading-none tracking-[-0.04em]">
+                ACL
+              </span>
+              <span className="font-display text-[13px] tracking-[0.24em] uppercase text-[var(--brand-blue)] font-bold">
+                Analytics
+              </span>
             </div>
+          </div>
+          <div
+            data-testid="tool-alteryx"
+            className="card-lift bg-white border border-[#e5e9f0] p-10 flex items-center justify-center min-h-[160px]"
+          >
+            <img
+              src="/logos/alteryx.svg"
+              alt="Alteryx"
+              className="h-14 md:h-16 w-auto"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* FRAMEWORKS — subtle row */}
+      <div className="mt-20 md:mt-24 border-t border-[#e5e9f0] pt-10">
+        <p className="font-display text-[12px] tracking-[0.24em] font-bold text-[var(--muted-ink)] uppercase">
+          Frameworks
+        </p>
+        <div
+          data-testid="frameworks-row"
+          className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3"
+        >
+          {FRAMEWORKS.map((f, i) => (
+            <React.Fragment key={f}>
+              <span className="font-display font-bold text-[18px] md:text-[20px] text-[var(--ink)] tracking-[-0.01em]">
+                {f}
+              </span>
+              {i < FRAMEWORKS.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="w-1.5 h-1.5 rounded-full bg-[var(--brand-blue)]"
+                />
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>
