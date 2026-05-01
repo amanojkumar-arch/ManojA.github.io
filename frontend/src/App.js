@@ -310,7 +310,7 @@ const About = () => (
         <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
       </div>
       <div className="lg:col-span-8 reveal">
-        <div className="space-y-5 font-body text-[var(--muted-ink)] text-[19px] leading-[1.75] max-w-3xl">
+        <div className="space-y-6 font-body text-[var(--muted-ink)] text-[20px] md:text-[21px] leading-[1.75] max-w-3xl">
           <p>
             I&apos;m{" "}
             <strong className="text-[var(--ink)]">Manoj Kumar</strong>, a Risk
@@ -410,10 +410,10 @@ const Services = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
       <div className="max-w-2xl reveal">
-        <h2 className="font-display text-[40px] md:text-[58px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
+        <h2 className="font-display text-[44px] md:text-[64px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Scope of Work
         </h2>
-        <p className="mt-6 font-body text-[19px] md:text-[20px] text-[var(--muted-ink)] leading-[1.7]">
+        <p className="mt-7 font-body text-[20px] md:text-[22px] text-[var(--muted-ink)] leading-[1.7]">
           Work focused on audit execution, control assessment, and risk
           evaluation across technology environments.
         </p>
@@ -436,10 +436,10 @@ const Services = () => (
                 <span />
               </span>
             </div>
-            <h3 className="mt-7 font-display font-extrabold text-[var(--ink)] text-[24px] leading-tight tracking-[-0.01em]">
+            <h3 className="mt-8 font-display font-extrabold text-[var(--ink)] text-[26px] md:text-[28px] leading-tight tracking-[-0.01em]">
               {s.title}
             </h3>
-            <p className="mt-4 font-body text-[17px] text-[var(--muted-ink)] leading-[1.7]">
+            <p className="mt-5 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.7]">
               {s.body}
             </p>
           </div>
@@ -498,13 +498,13 @@ const Expertise = () => (
         </div>
         <div className="lg:col-span-4 flex lg:justify-end">
           <div
-            className="inline-flex items-center gap-5 px-7 py-5 bg-[var(--ink)] text-white"
             data-testid="expertise-stat"
+            className="years-badge group relative inline-flex items-center gap-6 px-9 py-7 cursor-default overflow-hidden"
           >
-            <span className="font-display text-[var(--brand-blue)] text-5xl font-extrabold leading-none">
+            <span className="relative z-10 font-display text-[var(--brand-blue)] text-[68px] md:text-[78px] font-extrabold leading-none tracking-[-0.04em] drop-shadow-[0_2px_18px_rgba(28,163,224,0.45)]">
               7+
             </span>
-            <span className="font-display text-[13px] tracking-[0.2em] uppercase text-white/80 max-w-[150px] leading-snug">
+            <span className="relative z-10 font-display text-[14px] tracking-[0.22em] uppercase text-white/85 max-w-[170px] leading-snug font-semibold">
               Years in Audit &amp; Risk
             </span>
           </div>
@@ -514,18 +514,15 @@ const Expertise = () => (
       {/* BLOCK 1 — Risk Lifecycle */}
       <div
         data-testid="lifecycle-block"
-        className="reveal mt-20 md:mt-24 bg-[var(--paper-soft)] border border-[#e5e9f0] p-8 md:p-14"
+        className="reveal mt-16 md:mt-20 bg-[var(--paper-soft)] border border-[#e5e9f0] p-8 md:p-14"
       >
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-            Block 01 · Risk Lifecycle
-          </p>
-          <p className="font-body text-[15px] text-[var(--muted-ink)] hidden md:block">
+        <div className="flex items-center justify-end flex-wrap gap-4">
+          <p className="font-body text-[16px] text-[var(--muted-ink)] hidden md:block">
             How a typical engagement moves end-to-end.
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap md:flex-nowrap items-start justify-between gap-y-12">
+        <div className="mt-8 flex flex-wrap md:flex-nowrap items-start justify-between gap-y-12">
           {LIFECYCLE.map((step, i) => {
             const { Icon } = step;
             return (
@@ -565,10 +562,7 @@ const Expertise = () => (
       <div className="mt-20 md:mt-28">
         <div className="flex items-baseline justify-between flex-wrap gap-4 reveal">
           <div>
-            <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-              Block 02 · Audit &amp; Control Capabilities
-            </p>
-            <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+            <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
               Where the day-to-day work sits.
             </h3>
           </div>
@@ -592,7 +586,7 @@ const Expertise = () => (
                   />
                 </span>
                 <div className="pt-2">
-                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[22px] md:text-[24px] leading-tight tracking-[-0.01em]">
+                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[24px] md:text-[26px] leading-tight tracking-[-0.01em]">
                     {cap.label}
                   </h4>
                 </div>
@@ -605,10 +599,7 @@ const Expertise = () => (
       {/* BLOCK 3 — Industries */}
       <div className="mt-20 md:mt-28">
         <div className="reveal">
-          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-            Block 03 · Industries
-          </p>
-          <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+          <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
             Sectors I&apos;ve worked across.
           </h3>
         </div>
@@ -644,10 +635,7 @@ const Expertise = () => (
       {/* BLOCK 4 — Tools */}
       <div className="mt-20 md:mt-28">
         <div className="reveal">
-          <p className="font-display text-[13px] tracking-[0.24em] font-bold text-[var(--brand-blue)] uppercase">
-            Block 04 · Tools
-          </p>
-          <h3 className="mt-4 font-display text-[28px] md:text-[40px] font-extrabold text-[var(--ink)] tracking-[-0.01em]">
+          <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
             Day-to-day tooling.
           </h3>
         </div>
@@ -721,7 +709,7 @@ const EXPERIENCE = [
   },
   {
     period: "Feb 2021 — Mar 2023",
-    role: "Experienced Associate (incl. Netherlands Secondment)",
+    role: "Experienced Associate",
     org: "PwC",
     location: "Hyderabad",
     logo: "/logos/pwc.svg",
@@ -864,7 +852,7 @@ const Contact = () => (
         <h2 className="mt-5 font-display text-[40px] md:text-[60px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Working on something interesting in audit, risk, governance, or cyber these days?
         </h2>
-        <div className="mt-7 space-y-4 font-body text-[19px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
+        <div className="mt-7 space-y-5 font-body text-[20px] md:text-[21px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
           <p>
             I enjoy connecting with people in IT audit, risk, and cyber
             governance—sharing thoughts on SOX, SOC, and how risk is evolving.
