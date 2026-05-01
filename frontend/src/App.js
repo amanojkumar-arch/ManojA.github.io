@@ -12,6 +12,7 @@ import {
   Briefcase,
   FlaskConical,
   ChevronRight,
+  ChevronLeft,
   Menu,
   X,
 } from "lucide-react";
@@ -297,6 +298,138 @@ const Hero = () => {
   );
 };
 
+/* ---------------- Section Pager (prev / next nav between sections) ---------------- */
+const SECTION_ORDER = [
+  { id: "top", label: "Home" },
+  { id: "about", label: "Profile" },
+  { id: "zyaan-edge", label: "Zyaan Edge" },
+  { id: "services", label: "Scope of Work" },
+  { id: "expertise", label: "Risk Capability Map" },
+  { id: "experience", label: "Work Experience" },
+  { id: "contact", label: "Contact" },
+];
+
+const SectionPager = ({ currentId, theme = "light" }) => {
+  const idx = SECTION_ORDER.findIndex((s) => s.id === currentId);
+  if (idx === -1) return null;
+  const prev = idx > 0 ? SECTION_ORDER[idx - 1] : null;
+  const next = idx < SECTION_ORDER.length - 1 ? SECTION_ORDER[idx + 1] : null;
+  const isDark = theme === "dark";
+  const labelClr = isDark ? "text-white/55" : "text-[var(--muted-ink)]";
+  const titleClr = isDark ? "text-white" : "text-[var(--ink)]";
+  const dividerClr = isDark ? "border-white/15" : "border-[#e5e9f0]";
+  return (
+    <div
+      data-testid={`pager-${currentId}`}
+      className={`mt-16 md:mt-20 pt-8 border-t ${dividerClr} flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4`}
+    >
+      {prev ? (
+        <button
+          data-testid={`pager-prev-${currentId}`}
+          onClick={() => scrollTo(prev.id)}
+          className="group flex items-center gap-4 text-left transition"
+        >
+          <span
+            className={`flex items-center justify-center w-11 h-11 rounded-full border ${
+              isDark
+                ? "border-white/30 group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+                : "border-[#cbd2dc] group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+            } transition`}
+          >
+            <ChevronLeft
+              strokeWidth={2}
+              className={`w-5 h-5 ${
+                isDark ? "text-white" : "text-[var(--ink)]"
+              } group-hover:text-[var(--brand-blue)] transition`}
+            />
+          </span>
+          <span>
+            <span
+              className={`block font-display text-[11px] tracking-[0.22em] uppercase font-bold ${labelClr}`}
+            >
+              Previous
+            </span>
+            <span
+              className={`block font-display text-[16px] md:text-[17px] font-extrabold ${titleClr} group-hover:text-[var(--brand-blue)] transition`}
+            >
+              {prev.label}
+            </span>
+          </span>
+        </button>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <button
+          data-testid={`pager-next-${currentId}`}
+          onClick={() => scrollTo(next.id)}
+          className="group flex items-center gap-4 text-right ml-auto transition"
+        >
+          <span>
+            <span
+              className={`block font-display text-[11px] tracking-[0.22em] uppercase font-bold ${labelClr}`}
+            >
+              Next
+            </span>
+            <span
+              className={`block font-display text-[16px] md:text-[17px] font-extrabold ${titleClr} group-hover:text-[var(--brand-blue)] transition`}
+            >
+              {next.label}
+            </span>
+          </span>
+          <span
+            className={`flex items-center justify-center w-11 h-11 rounded-full border ${
+              isDark
+                ? "border-white/30 group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+                : "border-[#cbd2dc] group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+            } transition`}
+          >
+            <ChevronRight
+              strokeWidth={2}
+              className={`w-5 h-5 ${
+                isDark ? "text-white" : "text-[var(--ink)]"
+              } group-hover:text-[var(--brand-blue)] transition`}
+            />
+          </span>
+        </button>
+      ) : (
+        <button
+          data-testid={`pager-top-${currentId}`}
+          onClick={() => scrollTo("top")}
+          className="group flex items-center gap-4 text-right ml-auto transition"
+        >
+          <span>
+            <span
+              className={`block font-display text-[11px] tracking-[0.22em] uppercase font-bold ${labelClr}`}
+            >
+              Back to
+            </span>
+            <span
+              className={`block font-display text-[16px] md:text-[17px] font-extrabold ${titleClr} group-hover:text-[var(--brand-blue)] transition`}
+            >
+              Top of Page
+            </span>
+          </span>
+          <span
+            className={`flex items-center justify-center w-11 h-11 rounded-full border ${
+              isDark
+                ? "border-white/30 group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+                : "border-[#cbd2dc] group-hover:border-[var(--brand-blue)] group-hover:bg-[var(--brand-blue)]/10"
+            } transition`}
+          >
+            <ChevronRight
+              strokeWidth={2}
+              className={`w-5 h-5 -rotate-90 ${
+                isDark ? "text-white" : "text-[var(--ink)]"
+              } group-hover:text-[var(--brand-blue)] transition`}
+            />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+};
+
 /* ---------------- Profile (formerly Who I Am) ---------------- */
 const About = () => (
   <section
@@ -306,11 +439,12 @@ const About = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-12">
       <div className="lg:col-span-4">
-        <p className="kicker">Profile</p>
-        <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
+        <span data-testid="profile-label" className="side-label">
+          Profile
+        </span>
       </div>
       <div className="lg:col-span-8 reveal">
-        <div className="space-y-6 font-body text-[var(--muted-ink)] text-[20px] md:text-[21px] leading-[1.75] max-w-3xl">
+        <div className="space-y-5 font-body text-[var(--muted-ink)] text-[18px] md:text-[19px] leading-[1.75] max-w-3xl">
           <p>
             I&apos;m{" "}
             <strong className="text-[var(--ink)]">Manoj Kumar</strong>, a Risk
@@ -336,6 +470,9 @@ const About = () => (
         </div>
       </div>
     </div>
+    <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+      <SectionPager currentId="about" />
+    </div>
   </section>
 );
 
@@ -349,14 +486,15 @@ const ZyaanEdge = () => (
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
       <div className="border-t border-[#e5e9f0] pt-16 md:pt-20 grid lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-4">
-          <p className="kicker">Initiative</p>
-          <div className="mt-6 h-[3px] w-14 bg-[var(--brand-blue)]" />
+          <span data-testid="initiative-label" className="side-label">
+            Initiative
+          </span>
         </div>
         <div className="lg:col-span-8 reveal">
-          <h2 className="font-display text-[32px] md:text-[44px] lg:text-[52px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
+          <h2 className="font-display text-[28px] md:text-[40px] lg:text-[46px] font-extrabold text-[var(--ink)] leading-[1.1] tracking-[-0.02em]">
             Zyaan Edge
           </h2>
-          <p className="mt-6 font-body text-[var(--muted-ink)] text-[19px] leading-[1.75] max-w-2xl">
+          <p className="mt-5 font-body text-[var(--muted-ink)] text-[18px] md:text-[19px] leading-[1.75] max-w-2xl">
             An initiative focused on mentoring and guiding early-career
             professionals in IT audit, risk, and cybersecurity.
           </p>
@@ -370,6 +508,7 @@ const ZyaanEdge = () => (
           </a>
         </div>
       </div>
+      <SectionPager currentId="zyaan-edge" />
     </div>
   </section>
 );
@@ -410,10 +549,10 @@ const Services = () => (
   >
     <div className="max-w-[1320px] mx-auto px-6 md:px-10">
       <div className="max-w-2xl reveal">
-        <h2 className="font-display text-[44px] md:text-[64px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
+        <h2 className="font-display text-[34px] md:text-[52px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Scope of Work
         </h2>
-        <p className="mt-7 font-body text-[20px] md:text-[22px] text-[var(--muted-ink)] leading-[1.7]">
+        <p className="mt-6 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.7]">
           Work focused on audit execution, control assessment, and risk
           evaluation across technology environments.
         </p>
@@ -436,15 +575,16 @@ const Services = () => (
                 <span />
               </span>
             </div>
-            <h3 className="mt-8 font-display font-extrabold text-[var(--ink)] text-[26px] md:text-[28px] leading-tight tracking-[-0.01em]">
+            <h3 className="mt-6 font-display font-extrabold text-[var(--ink)] text-[22px] md:text-[24px] leading-tight tracking-[-0.01em]">
               {s.title}
             </h3>
-            <p className="mt-5 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.7]">
+            <p className="mt-4 font-body text-[16px] md:text-[17px] text-[var(--muted-ink)] leading-[1.7]">
               {s.body}
             </p>
           </div>
         ))}
       </div>
+      <SectionPager currentId="services" />
     </div>
   </section>
 );
@@ -486,11 +626,11 @@ const Expertise = () => (
         <div className="lg:col-span-8">
           <h2
             data-testid="expertise-headline"
-            className="font-display text-[44px] md:text-[64px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]"
+            className="font-display text-[36px] md:text-[58px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]"
           >
             Risk Capability Map
           </h2>
-          <p className="mt-6 font-body text-[19px] md:text-[21px] text-[var(--muted-ink)] leading-[1.7] max-w-2xl">
+          <p className="mt-6 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.7] max-w-2xl">
             A structured view of how I operate across the audit and risk
             lifecycle—focused on execution, control evaluation, and risk
             visibility.
@@ -499,12 +639,12 @@ const Expertise = () => (
         <div className="lg:col-span-4 flex lg:justify-end">
           <div
             data-testid="expertise-stat"
-            className="years-badge group relative inline-flex items-center gap-6 px-9 py-7 cursor-default overflow-hidden"
+            className="years-badge group relative inline-flex items-center gap-5 px-7 py-5 cursor-default overflow-hidden"
           >
-            <span className="relative z-10 font-display text-[var(--brand-blue)] text-[68px] md:text-[78px] font-extrabold leading-none tracking-[-0.04em] drop-shadow-[0_2px_18px_rgba(28,163,224,0.45)]">
+            <span className="relative z-10 font-display text-[var(--brand-blue)] text-[54px] md:text-[64px] font-extrabold leading-none tracking-[-0.04em] drop-shadow-[0_2px_18px_rgba(28,163,224,0.45)]">
               7+
             </span>
-            <span className="relative z-10 font-display text-[14px] tracking-[0.22em] uppercase text-white/85 max-w-[170px] leading-snug font-semibold">
+            <span className="relative z-10 font-display text-[12px] md:text-[13px] tracking-[0.22em] uppercase text-white/85 max-w-[160px] leading-snug font-semibold">
               Years in Audit &amp; Risk
             </span>
           </div>
@@ -562,7 +702,7 @@ const Expertise = () => (
       <div className="mt-20 md:mt-28">
         <div className="flex items-baseline justify-between flex-wrap gap-4 reveal">
           <div>
-            <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
+            <h3 className="font-display text-[26px] md:text-[36px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.15]">
               Where the day-to-day work sits.
             </h3>
           </div>
@@ -585,8 +725,8 @@ const Expertise = () => (
                     style={{ width: "3rem", height: "3rem" }}
                   />
                 </span>
-                <div className="pt-2">
-                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[24px] md:text-[26px] leading-tight tracking-[-0.01em]">
+                <div className="pt-1">
+                  <h4 className="font-display font-extrabold text-[var(--ink)] text-[20px] md:text-[22px] leading-tight tracking-[-0.01em]">
                     {cap.label}
                   </h4>
                 </div>
@@ -599,7 +739,7 @@ const Expertise = () => (
       {/* BLOCK 3 — Industries */}
       <div className="mt-20 md:mt-28">
         <div className="reveal">
-          <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
+          <h3 className="font-display text-[26px] md:text-[36px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.15]">
             Sectors I&apos;ve worked across.
           </h3>
         </div>
@@ -635,7 +775,7 @@ const Expertise = () => (
       {/* BLOCK 4 — Tools */}
       <div className="mt-20 md:mt-28">
         <div className="reveal">
-          <h3 className="font-display text-[32px] md:text-[46px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.1]">
+          <h3 className="font-display text-[26px] md:text-[36px] font-extrabold text-[var(--ink)] tracking-[-0.02em] leading-[1.15]">
             Day-to-day tooling.
           </h3>
         </div>
@@ -692,6 +832,8 @@ const Expertise = () => (
           ))}
         </div>
       </div>
+
+      <SectionPager currentId="expertise" />
     </div>
   </section>
 );
@@ -769,7 +911,7 @@ const Experience = () => (
 
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 relative">
       <p className="kicker text-[#5fc0ea]">Work Experience</p>
-      <h2 className="mt-5 font-display text-[40px] md:text-[58px] font-extrabold text-white leading-[1.05] tracking-[-0.02em] max-w-3xl">
+      <h2 className="mt-5 font-display text-[34px] md:text-[52px] font-extrabold text-white leading-[1.05] tracking-[-0.02em] max-w-3xl">
         Roles, responsibilities, and where the work happened.
       </h2>
 
@@ -824,7 +966,7 @@ const Experience = () => (
                   {e.body.split("\n\n").map((para, idx) => (
                     <p
                       key={idx}
-                      className="font-body text-white/75 text-[17px] leading-[1.75]"
+                      className="font-body text-white/75 text-[16px] md:text-[17px] leading-[1.75]"
                     >
                       {para}
                     </p>
@@ -835,6 +977,7 @@ const Experience = () => (
           ))}
         </div>
       </div>
+      <SectionPager currentId="experience" theme="dark" />
     </div>
   </section>
 );
@@ -849,10 +992,10 @@ const Contact = () => (
     <div className="max-w-[1320px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10 items-start">
       <div className="lg:col-span-6 reveal">
         <p className="kicker">Let's Connect</p>
-        <h2 className="mt-5 font-display text-[40px] md:text-[60px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
+        <h2 className="mt-5 font-display text-[34px] md:text-[52px] font-extrabold text-[var(--ink)] leading-[1.05] tracking-[-0.02em]">
           Working on something interesting in audit, risk, governance, or cyber these days?
         </h2>
-        <div className="mt-7 space-y-5 font-body text-[20px] md:text-[21px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
+        <div className="mt-6 space-y-4 font-body text-[18px] md:text-[19px] text-[var(--muted-ink)] leading-[1.75] max-w-xl">
           <p>
             I enjoy connecting with people in IT audit, risk, and cyber
             governance—sharing thoughts on SOX, SOC, and how risk is evolving.
@@ -923,6 +1066,7 @@ const Contact = () => (
           </div>
         </div>
       </div>
+      <SectionPager currentId="contact" />
     </div>
   </section>
 );
