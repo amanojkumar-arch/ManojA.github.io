@@ -376,25 +376,40 @@ const Expertise = () => (
 /* ---------------- Work Experience ---------------- */
 const EXPERIENCE = [
   {
-    period: "2021 — Present",
-    role: "Senior Manager · IT Risk & Assurance",
-    org: "Confidential · Big 4 Consulting",
+    period: "Mar 2023 — Present",
+    role: "Enterprise Technology Senior Auditor / Enterprise Technology Auditor",
+    org: "Wells Fargo",
+    location: "Hyderabad",
+    logo: "/logos/wellsfargo.svg",
     body:
-      "Lead IT audit and cyber governance engagements for banks, NBFCs and listed enterprises. Built SOX ITGC programmes, SOC 2 readiness and NIST CSF baselines from the ground up.",
+      "Executed enterprise technology risk audits across infrastructure, applications, and cyber domains. Assessed ITGC/ITAC controls, supported SOX/regulatory assurance, and contributed to risk-based audit planning. Partnered with stakeholders to strengthen governance and control maturity.",
   },
   {
-    period: "2017 — 2021",
-    role: "Manager · Internal Audit & GRC",
-    org: "Global Financial Services Firm",
+    period: "Feb 2021 — Mar 2023",
+    role: "Experienced Associate (incl. Netherlands Secondment)",
+    org: "PwC",
+    location: "",
+    logo: "/logos/pwc.svg",
     body:
-      "Owned the annual IA plan for technology, operations and regulatory audits. Partnered with CISO on third-party risk, access governance and cloud migration controls.",
+      "Executed SOX/ICFR IT audits, assessed ITGC and application controls, and supported remediation. Used analytics (ACL, Alteryx) to improve audit efficiency and identify control gaps. Contributed to internal quality control testing during secondment in the Netherlands.",
   },
   {
-    period: "2013 — 2017",
-    role: "IT Auditor · Risk Advisory",
-    org: "Big 4 Consulting",
+    period: "Feb 2019 — Jan 2021",
+    role: "Internal Auditor (Consultant)",
+    org: "Granules India Limited",
+    location: "",
+    logo: "/logos/granules.png",
     body:
-      "Delivered ITGC, application and ERP (SAP/Oracle) control reviews across multiple industries. Foundational years in audit methodology and workpaper rigour.",
+      "Performed ICFR testing, process audits, and control evaluations. Supported internal audit leadership and mentored junior team members.",
+  },
+  {
+    period: "Aug 2017 — Jun 2018",
+    role: "Associate Consultant",
+    org: "Infosys",
+    location: "",
+    logo: "/logos/infosys.svg",
+    body:
+      "Worked in management reporting and business process environments, supporting operational and financial reporting workflows.",
   },
 ];
 
@@ -450,9 +465,29 @@ const Experience = () => (
                   <p className="font-display text-[var(--brand-blue)] font-bold text-[13px] tracking-[0.2em] uppercase">
                     {e.period}
                   </p>
-                  <p className="mt-2 font-display text-white text-lg font-semibold">
-                    {e.org}
-                  </p>
+                  <div className="mt-3 flex items-center gap-3">
+                    {e.logo && (
+                      <span
+                        data-testid={`experience-${i}-logo`}
+                        className="inline-flex items-center justify-center w-11 h-11 rounded-md bg-white p-1.5 flex-shrink-0"
+                      >
+                        <img
+                          src={e.logo}
+                          alt={`${e.org} logo`}
+                          className="max-w-full max-h-full object-contain"
+                          loading="lazy"
+                        />
+                      </span>
+                    )}
+                    <p className="font-display text-white text-lg font-semibold leading-tight">
+                      {e.org}
+                    </p>
+                  </div>
+                  {e.location && (
+                    <p className="mt-2 font-body text-white/55 text-sm">
+                      {e.location}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="md:col-span-8">
