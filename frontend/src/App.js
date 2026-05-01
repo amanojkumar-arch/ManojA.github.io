@@ -12,6 +12,8 @@ import {
   Briefcase,
   FlaskConical,
   ChevronRight,
+  Menu,
+  X,
 } from "lucide-react";
 import Blogs from "./pages/Blogs";
 
@@ -83,49 +85,100 @@ const Header = () => {
     "experience",
     "contact",
   ]);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleNav = (id) => {
+    setMenuOpen(false);
+    scrollTo(id);
+  };
+
   return (
     <header
       data-testid="site-header"
       className="absolute top-0 left-0 right-0 z-30"
     >
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 pt-6 md:pt-8 flex items-center justify-between">
-        <button
-          data-testid="brand-logo"
-          onClick={() => scrollTo("top")}
-          className="flex items-center gap-3 group"
-        >
-          <span className="font-display text-white text-2xl md:text-3xl font-extrabold tracking-tight">
-            Manoj&nbsp;Kumar
-          </span>
-          <span className="chevron-mark" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-        </button>
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 pt-6 md:pt-8 flex items-center justify-between gap-8">
+        {/* LEFT CLUSTER: brand + nav */}
+        <div className="flex items-center gap-10 xl:gap-14 min-w-0">
+          <button
+            data-testid="brand-logo"
+            onClick={() => scrollTo("top")}
+            className="flex items-center gap-3 group flex-shrink-0"
+          >
+            <span className="font-display text-white text-2xl md:text-3xl font-extrabold tracking-tight">
+              Manoj&nbsp;Kumar
+            </span>
+            <span className="chevron-mark" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
 
-        <nav className="hidden lg:flex items-center gap-10">
-          {NAV_LINKS.map((n) => (
-            <button
-              key={n.id}
-              data-testid={`nav-${n.id}`}
-              onClick={() => scrollTo(n.id)}
-              data-active={active === n.id}
-              className="nav-link font-display text-white/85 hover:text-white text-[17px] font-semibold"
-            >
-              {n.label}
-            </button>
-          ))}
-        </nav>
+          <nav
+            data-testid="primary-nav"
+            className="hidden lg:flex items-center gap-8 xl:gap-10"
+          >
+            {NAV_LINKS.map((n) => (
+              <button
+                key={n.id}
+                data-testid={`nav-${n.id}`}
+                onClick={() => handleNav(n.id)}
+                data-active={active === n.id}
+                className="nav-link font-display text-white/85 hover:text-white text-[17px] font-semibold whitespace-nowrap"
+              >
+                {n.label}
+              </button>
+            ))}
+          </nav>
+        </div>
 
-        <button
-          data-testid="lets-connect-btn"
-          onClick={() => scrollTo("contact")}
-          className="cta-pill font-display font-bold text-[13px] tracking-[0.14em] px-6 md:px-7 py-3 md:py-3.5"
-        >
-          LET'S CONNECT
-        </button>
+        {/* RIGHT: CTA + mobile hamburger */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <button
+            data-testid="lets-connect-btn"
+            onClick={() => scrollTo("contact")}
+            className="cta-pill font-display font-bold text-[13px] tracking-[0.14em] px-6 md:px-7 py-3 md:py-3.5"
+          >
+            LET'S CONNECT
+          </button>
+          <button
+            data-testid="mobile-menu-toggle"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            className="lg:hidden inline-flex items-center justify-center w-11 h-11 text-white border border-white/30 rounded-md hover:bg-white/10 transition"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile drawer */}
+      {menuOpen && (
+        <div
+          data-testid="mobile-menu"
+          className="lg:hidden mx-6 mt-3 rounded-lg bg-[var(--ink)] border border-white/10 overflow-hidden shadow-2xl"
+        >
+          <ul className="divide-y divide-white/10">
+            {NAV_LINKS.map((n) => (
+              <li key={n.id}>
+                <button
+                  data-testid={`mobile-nav-${n.id}`}
+                  onClick={() => handleNav(n.id)}
+                  data-active={active === n.id}
+                  className="w-full text-left px-6 py-4 font-display text-white/90 hover:text-white text-[16px] font-semibold flex items-center justify-between"
+                >
+                  {n.label}
+                  {active === n.id && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-blue)]" />
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   );
 };
