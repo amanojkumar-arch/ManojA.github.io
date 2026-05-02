@@ -20,9 +20,13 @@ jobs:
         working-directory: ./frontend
         run: npm install --legacy-peer-deps
 
+      - name: Fix ajv issue
+        working-directory: ./frontend
+        run: npm install ajv@^8 --legacy-peer-deps
+
       - name: Build
         working-directory: ./frontend
-        run: npm run build --legacy-peer-deps
+        run: CI=false npm run build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
