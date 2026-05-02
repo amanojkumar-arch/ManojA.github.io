@@ -20,11 +20,13 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm ci --legacy-peer-deps
+        run: yarn install
 
       - name: Build the app
         working-directory: ./frontend
-        run: npm run build
+        env:
+          CI: false
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -32,3 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./frontend/build
           publish_branch: gh-pages
+          cname: amanojkumar-arch.github.io
