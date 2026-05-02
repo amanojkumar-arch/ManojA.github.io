@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ManojA.github.io/static/css/main.1e2794ad.css",
+    "main.js": "/ManojA.github.io/static/js/main.bb97095a.js",
+    "index.html": "/ManojA.github.io/index.html",
+    "main.1e2794ad.css.map": "/ManojA.github.io/static/css/main.1e2794ad.css.map",
+    "main.bb97095a.js.map": "/ManojA.github.io/static/js/main.bb97095a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1e2794ad.css",
+    "static/js/main.bb97095a.js"
+  ]
+}
